@@ -61,4 +61,6 @@ Improvements:
 - Cleaner Error string. Time estimation: 4h.
 - Security.
 
-this will be enoug to test and integrate with foAny other details in code documentation.
+This will be enough to test and integrate with for any other details in code documentation and pdf doc.
+
+Best.
