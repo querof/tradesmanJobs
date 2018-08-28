@@ -47,7 +47,7 @@ class CityControllerTest extends WebTestCase
         );
 
 
-        $this->assertEquals(400,$client->getResponse()->getStatusCode());
+        $this->assertEquals(406,$client->getResponse()->getStatusCode());
     }
 
 }
