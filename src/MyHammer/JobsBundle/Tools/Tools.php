@@ -15,7 +15,8 @@ class Tools
    * @param String $zipCode, zip code of the city.
    * @param String $countryCode, iso code of the city.
    *
-   * @return Boolean, true if a valid zipcode for the country. Only tested with 'DE'
+   * @return Boolean, true if a valid zipcode for the country. Only tested with
+   *         'DE'
    */
 
   public static function zipValidation($zipCode,$countryCode)

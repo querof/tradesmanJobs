@@ -28,8 +28,9 @@ class JobsController extends FOSRestController
     /**
      * Returns a doctrine object and FOSRestBundle will turn it in a
      * json object. Only return jobs for user thats are not the creator of the
-     * record and country isocode = $this->getParameter('isocode')
-     * (set in parameters as 'DE', Deutschland isocode)
+     * record, country isocode = $this->getParameter('isocode')
+     * (set in parameters as 'DE', Deutschland isocode) and the date has 30 days
+     * or less of been created.
      *
      * @param Request object $request. Can containt zipcode and service, to
      * filter the query; but they are optional.
@@ -48,11 +49,11 @@ class JobsController extends FOSRestController
         $qb->select('j')->from('MyHammerJobsBundle:Job', 'j')
               ->leftJoin('j.city', 'c')
               ->leftJoin('c.country', 'ct')
-              ->where('ct.isocode = :isocode')
-              ->andWhere('j.user <> :user')
-              ->andWhere('DATE_DIFF(CURRENT_DATE(),j.date) <= 30')
-              ->setParameter('isocode', $this->getParameter('isocode'))
-              ->setParameter('user', $request->get('user'));
+                ->where('ct.isocode = :isocode')
+                ->andWhere('j.user <> :user')
+                ->andWhere('DATE_DIFF(CURRENT_DATE(),j.date) <= 30')
+                  ->setParameter('isocode', $this->getParameter('isocode'))
+                  ->setParameter('user', $request->get('user'));
 
 
         if($request->get('zipcode')!==null && $request->get('zipcode')!=='') $qb->andWhere('c.zipcode = :zipcode')->setParameter('zipcode', $request->get('zipcode'));
@@ -77,11 +78,11 @@ class JobsController extends FOSRestController
 
     public function idAction($id)
     {
-      $result = $this->getDoctrine()->getRepository('MyHammerJobsBundle:Job')->find($id);
+        $result = $this->getDoctrine()->getRepository('MyHammerJobsBundle:Job')->find($id);
 
-      if ($result === null) return new View("Job not found", Response::HTTP_NOT_FOUND);
+        if ($result === null) return new View("Job not found", Response::HTTP_NOT_FOUND);
 
-      return $result;
+        return $result;
     }
 
 
@@ -173,7 +174,7 @@ class JobsController extends FOSRestController
     /**
      * Asign values to instance of MyHammer\JobsBundle\Entity\Job.
      *
-     * @param Array $objData. IFiels: "city","service","title",
+     * @param Array $objData. Fiels: "city","service","title",
      *                                        "description","date","user"
      *
      * @return An instance of MyHammer\JobsBundle\Entity\Job
@@ -198,10 +199,10 @@ class JobsController extends FOSRestController
      * values and object thats will be used in the insert/update transactions;
      * finding and asigning objects instances of:
      * MyHammer\JobsBundle\Entity\City,MyHammer\JobsBundle\Entity\Service and
-     * MyHammer\JobsBundle\Entity\User. Also create a position to errors.
+     * MyHammer\JobsBundle\Entity\User. Also create a position for errors.
      *
-     * @param Integer $id. Id (PK) of MyHammer\JobsBundle\Entity\Job, it can have
-     * a valid pk value or "0" (wich means its a create action)
+     * @param Integer $id. Id (PK) of MyHammer\JobsBundle\Entity\Job, it must
+     * have a valid pk value or "0" (wich means its a create action)
      * @param Request object $request. Fiels: "city","service","title",
      *                                        "description","date","user"
      *

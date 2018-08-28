@@ -28,10 +28,11 @@ class CityController extends FOSRestController
    * isocode = $this->getParameter('isocode') (set in parameters as 'DE',
    * Deutschland isocode)
    *
-   * @param Request object $request. Can containt zipcode  to
-   * filter the query; but it is optional.
+   * @param Request object $request. Can containt zipcode  to filter the query;
+   *        but it is optional.
    *
-   * @return Json of MyHammer\JobsBundle\Entity\Ciy class instace; according with resulset of the database.
+   * @return Json of MyHammer\JobsBundle\Entity\Ciy class instace; according
+   *         with resulset of the database.
    */
 
     public function getCityAction(Request $request)
