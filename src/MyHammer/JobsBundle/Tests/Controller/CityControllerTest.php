@@ -10,21 +10,44 @@ class CityControllerTest extends WebTestCase
     {
         $client = static::createClient();
 
-        $crawler = $client->request('GET', '/city');
+        $crawler = $client->request('POST', '/city');
 
         $this->assertEquals(200,$client->getResponse()->getStatusCode());
 
-        $crawler = $client->request('GET', '/city/10115');
+
+        $response = $client->request(
+            'POST',
+            '/city',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+                '{"zipcode" : 10115}'
+        );
 
         $this->assertEquals(200,$client->getResponse()->getStatusCode());
 
-        $crawler = $client->request('GET', '/city/10115644');
+        $response = $client->request(
+            'POST',
+            '/city',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+                '{"zipcode" : 10115644}'
+        );
 
         $this->assertEquals(406,$client->getResponse()->getStatusCode());
 
-        $crawler = $client->request('GET', '/city/dddd4');
+        $response = $client->request(
+            'POST',
+            '/city',
+            array(),
+            array(),
+            array('CONTENT_TYPE' => 'application/json'),
+                '{"zipcode" : dddd4}'
+        );
 
-        $this->assertEquals(406,$client->getResponse()->getStatusCode());
+
+        $this->assertEquals(400,$client->getResponse()->getStatusCode());
     }
 
 }

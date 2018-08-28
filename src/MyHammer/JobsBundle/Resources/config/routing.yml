@@ -23,6 +23,6 @@ update:
     methods:  [PUT]
 
 get_city:
-    path:     /city/{zipcode}
-    defaults: { _controller: MyHammerJobsBundle:City:getCity,zipcode: }
-    methods:  [GET]
+    path:     /city
+    defaults: { _controller: MyHammerJobsBundle:City:getCity }
+    methods:  [POST]
