@@ -36,12 +36,12 @@ End points. 5 end points 4 for Jobs and 1 for City
 - Create a job:
     Method: POST.
     Example:
-      - <server_address>/jobs/?city=2&service=802030&date=2018/09/01&user=1&title=444444&description=333333333333333333333333333333333333333333333333333333333333333333333333333333333333333
+      - <server_address>/jobs/?city=2&service=802030&date=2018/09/01&user=1&title=Get ready for MyHammer&description=Get ready for MyHammer, develop custom made APIs
 
 - Update a job:
     Method: PUT.
     Example:
-      - <server_address>/jobs/4?city=2&service=802030&date=2018/09/01&user=1&title=eeeeeeeeeeeeeeeeeeee&description=eeeeedddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+      - <server_address>/jobs/4?city=2&service=802030&date=2018/09/01&user=1&title=Get ready for MyHammer&description=Get ready for MyHammer, develop custom made APIs
 
 - Retrieve city info:
     Method: Post.
