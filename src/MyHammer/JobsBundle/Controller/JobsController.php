@@ -162,6 +162,12 @@ class JobsController extends FOSRestController
 
       $jobsParameters = $this->jobParameters($id,$request);
 
+      if($jobsParameters['data'] === null)
+      {
+          $jobsParameters['errors']= 'Job Not Found';
+          return $jobsParameters;
+      }
+
       $data = $this->jobObjCreate($jobsParameters);
 
       $errors = $validator->validate($jobsParameters['data']);
@@ -171,28 +177,6 @@ class JobsController extends FOSRestController
       return $jobsParameters;
     }
 
-    /**
-     * Asign values to instance of MyHammer\JobsBundle\Entity\Job.
-     *
-     * @param Array $objData. Fiels: "city","service","title",
-     *                                        "description","date","user"
-     *
-     * @return An instance of MyHammer\JobsBundle\Entity\Job
-     */
-
-    private function jobObjCreate($objData)
-    {
-      $data = $objData['data'];
-
-      $data->setCity($objData['city']);
-      $data->setService($objData['service']);
-      $data->setTitle($objData['title']);
-      $data->setDescription($objData['description']);
-      $data->setDate( \DateTime::createFromFormat('Y/m/d',$objData['date']));
-      $data->setUser($objData['user']);
-
-      return $data;
-    }
 
     /**
      * Find/create MyHammer\JobsBundle\Entity\Job. Create an array with the
@@ -221,6 +205,7 @@ class JobsController extends FOSRestController
       {
         $data = $this->getDoctrine()->getRepository('MyHammerJobsBundle:Job')->find($id);
       }
+// dump($data);
       $city = $this->getDoctrine()->getRepository('MyHammerJobsBundle:City')->find($request->get('city'));
 
       $service =  $this->getDoctrine()->getRepository('MyHammerJobsBundle:Service')->find($request->get('service'));
@@ -230,4 +215,27 @@ class JobsController extends FOSRestController
       return array('data' => $data, 'city' => $city,'service' => $service, 'title' => $request->get('title'), 'description' => $request->get('description'), 'date' => $request->get('date'), 'user' => $user,'errors' => null);
     }
 
+
+    /**
+     * Asign values to instance of MyHammer\JobsBundle\Entity\Job.
+     *
+     * @param Array $objData. Fiels: "city","service","title",
+     *                                        "description","date","user"
+     *
+     * @return An instance of MyHammer\JobsBundle\Entity\Job
+     */
+
+    private function jobObjCreate($objData)
+    {
+      $data = $objData['data'];
+
+      $data->setCity($objData['city']);
+      $data->setService($objData['service']);
+      $data->setTitle($objData['title']);
+      $data->setDescription($objData['description']);
+      $data->setDate( \DateTime::createFromFormat('Y/m/d',$objData['date']));
+      $data->setUser($objData['user']);
+
+      return $data;
+    }
 }
