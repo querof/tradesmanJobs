@@ -32,7 +32,7 @@ class JobsController extends FOSRestController
               ->where('ct.isocode = :isocode')
               ->andWhere('j.user <> :user')
               ->andWhere('DATE_DIFF(CURRENT_DATE(),j.date) <= 30')
-              ->setParameter('isocode', 'DE')
+              ->setParameter('isocode', $this->getParameter('isocode'))
               ->setParameter('user', $request->get('user'));
 
 
