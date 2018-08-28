@@ -14,14 +14,35 @@ use MyHammer\JobsBundle\Entity\City;
 use MyHammer\JobsBundle\Entity\Service;
 use MyHammer\JobsBundle\Entity\Job;
 use MyHammer\JobsBundle\Entity\User;
+use MyHammer\JobsBundle\Tools\Tools;
 
 class JobsController extends FOSRestController
 {
-    public function getAction()
+    public function getAction(Request $request)
     {
-        $result =  $this->getDoctrine()->getRepository('MyHammerJobsBundle:Job')->findAll();
+        if($request->get('zipcode')!==null && $request->get('zipcode')!=='' && Tools::zipValidation($request->get('zipcode'),"DE")===false) return new View("zipcode: ".$request->get('zipcode')." it's not a German valid zipcode" , Response::HTTP_NOT_ACCEPTABLE);
 
-        if ($result === null)  return new View("there are no jobs exist", Response::HTTP_NOT_FOUND);
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder();
+
+        $qb->select('j')->from('MyHammerJobsBundle:Job', 'j')
+              ->leftJoin('j.city', 'c')
+              ->leftJoin('c.country', 'ct')
+              ->where('ct.isocode = :isocode')
+              ->andWhere('j.user <> :user')
+              ->andWhere('DATE_DIFF(CURRENT_DATE(),j.date) <= 30')
+              ->setParameter('isocode', 'DE')
+              ->setParameter('user', $request->get('user'));
+
+
+        if($request->get('zipcode')!==null && $request->get('zipcode')!=='') $qb->andWhere('c.zipcode = :zipcode')->setParameter('zipcode', $request->get('zipcode'));
+
+        if($request->get('service')!==null && $request->get('service')!=='') $qb->andWhere('j.service = :service')->setParameter('service', $request->get('service'));
+
+        $result = $qb->getQuery()->getResult();
+
+        if ($result === null)  return new View("No jobs are registrered", Response::HTTP_NOT_FOUND);
 
         return $result;
     }
@@ -68,7 +89,7 @@ class JobsController extends FOSRestController
 
       $errors = $validator->validate($jobsParameters['data']);
 
-      if (count($errors) > 0) $jobsParameters['errors']= (string) $errors;
+      if (count($errors) > 0) $jobsParameters['errors']= $this->replaceFields((string) $errors);
 
       return $jobsParameters;
     }
@@ -104,5 +125,12 @@ class JobsController extends FOSRestController
       $user =  $this->getDoctrine()->getRepository('MyHammerJobsBundle:User')->find($request->get('user'));
 
       return array('data' => $data, 'city' => $city,'service' => $service, 'title' => $request->get('title'), 'description' => $request->get('description'), 'date' => $request->get('date'), 'user' => $user,'errors' => null);
+    }
+
+    private function replaceFields($string)
+    {
+      $fieldInfo = array("Object(MyHammer\\JobsBundle\\Entity\\Job).", "\n", " (code d94b19cc-114f-4f44-9cc4-4138e80a87b9)","(code 9ff3fdc4-b214-49db-8718-39c315e33d45)");
+
+      return str_replace($fieldInfo, "", $string);
     }
 }

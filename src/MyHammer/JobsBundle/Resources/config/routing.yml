@@ -5,12 +5,12 @@ my_hammer_jobs_homepage:
 get:
     path:     /jobs
     defaults: { _controller: MyHammerJobsBundle:Jobs:get }
-    methods:  [GET]
+    methods:  [POST]
 
 id:
     path:     /jobs/{id}
     defaults: { _controller: MyHammerJobsBundle:Jobs:id }
-    methods:  [GET] 
+    methods:  [GET]
 
 post:
     path:     /jobs/
