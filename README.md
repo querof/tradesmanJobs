@@ -64,4 +64,4 @@ Improvements:
 
 This will be enough to test and integrate with for any other details in code documentation and pdf doc.
 
-Best.
+Best Regards!
