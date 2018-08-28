@@ -1,0 +1,7 @@
+my_hammer_jobs:
+    resource: "@MyHammerJobsBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation

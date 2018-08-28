@@ -1,0 +1,28 @@
+my_hammer_jobs_homepage:
+    path:     /
+    defaults: { _controller: MyHammerJobsBundle:Jobs:get }
+
+get:
+    path:     /jobs
+    defaults: { _controller: MyHammerJobsBundle:Jobs:get }
+    methods:  [GET]
+
+id:
+    path:     /jobs/{id}
+    defaults: { _controller: MyHammerJobsBundle:Jobs:id }
+    methods:  [GET] 
+
+post:
+    path:     /jobs/
+    defaults: { _controller: MyHammerJobsBundle:Jobs:post }
+    methods:  [POST]
+
+update:
+    path:     /jobs/{id}
+    defaults: { _controller: MyHammerJobsBundle:Jobs:update }
+    methods:  [PUT]
+
+get_city:
+    path:     /city/{zipcode}
+    defaults: { _controller: MyHammerJobsBundle:City:getCity,zipcode: }
+    methods:  [GET]

@@ -1,0 +1,30 @@
+MyHammer\JobsBundle\Entity\Country:
+    type: entity
+    table: country
+    uniqueConstraints:
+        isocode:
+            columns:
+                - isocode
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        isocode:
+            type: string
+            nullable: false
+            length: 2
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

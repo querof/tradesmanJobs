@@ -1,0 +1,45 @@
+MyHammer\JobsBundle\Entity\City:
+    type: entity
+    table: city
+    indexes:
+        fk_country:
+            columns:
+                - country_id
+    uniqueConstraints:
+        zipcode:
+            columns:
+                - zipcode
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 50
+            options:
+                fixed: false
+        zipcode:
+            type: string
+            nullable: false
+            length: 5
+            options:
+                fixed: false
+    manyToOne:
+        country:
+            targetEntity: Country
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                country_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

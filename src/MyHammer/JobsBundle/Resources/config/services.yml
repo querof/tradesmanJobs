@@ -1,0 +1,4 @@
+services:
+#    my_hammer_jobs.example:
+#        class: MyHammer\JobsBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
