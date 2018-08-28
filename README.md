@@ -1,7 +1,7 @@
 tradesmanJobs
 =============
 
-A Symfony project created on August 22, 2018, 8:40 pm. APi rest developed by
+A Symfony project created on August 22, 2018, 8:40 pm. API Rest developed by
 Frank Quero for MyHammer.
 
 
@@ -12,6 +12,7 @@ Parameters: isocode.
 Environment:
   - SO: Linux Elementary OS Loki.
   - DB: Mysql 5.7.23.
+  - PHP 7.1.20.
   - Symfony 3.4.
 
 The project has 2 main controllers:
@@ -30,7 +31,7 @@ End points. 5 end points 4 for Jobs and 1 for City
 
 - Retrieve job info by pk:
     Method: GET.
-    Parameters: user: the user thats consult the info; zipcode: zipcode of the city; service: pk value of the service.
+    Parameters: id: pk value of the job.
     Example: <server_address>/jobs/2.  
 
 - Create a job:
